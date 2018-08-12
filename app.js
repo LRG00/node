@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
       console.log(err)
       return
     } else {
-      res.render("index", { title: '文章管理', articles });
+      res.render("index", { title: '文章管理1', articles });
     }
   })
   
