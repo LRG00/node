@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require('mongoose')
 const bodyParser = require("body-parser");
-const DB_URL = 'mongodb://localhost:27017/test'
+const DB_URL = 'mongodb://leeruigan:as123456@ds119702.mlab.com:19702/blog'
 mongoose.connect(DB_URL)
 mongoose.connection.on('connected', () => console.log('已启动mongo'))
 // 初始化app
@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
       console.log(err)
       return
     } else {
-      res.render("index", { title: '文章管理1', articles });
+      res.render("index", { title: '文章管理', articles });
     }
   })
   
@@ -37,7 +37,16 @@ app.get('/articles', function (req, res) {
 });
 
 app.get('/articles/add', function (req, res) {
-  res.render("add_article", { title: "添加文章" });
+  console.log(req.query.id)
+  Article.findOne({_id: req.query.id}, (err, article)=>{
+    if(err){
+      console.log(err)
+      return
+    } else {
+      res.render("add_article", { article: article || {} });
+    }
+  })
+  
 });
 app.post('/articles/add', function (req, res) {
   const { title, author, content } = req.body
