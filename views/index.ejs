@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+    <style type="text/css">
+      body {padding: 50px;font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;}
+    </style>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+      <ul>
+        <% for(var i=0; i< articles.length; i++) {%>
+          <li><%= articles[i].title %><button type="button" class="btn btn-primary">编辑</button></li>
+        <% } %>
+      </ul>
+      <button type="button" class="btn btn-primary">添加</button>
+  </body>
+</html>
+<script src='/bower_components/jquery/dist/jquery.js'></script>
+<script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
