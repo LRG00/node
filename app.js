@@ -21,6 +21,13 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 // 引入article models
 const Article = require('./models/article')
+// 引入user models
+const User = require('./models/user')
+// // 处理表单及文件上传的中间件
+// app.use(require('express-formidable')({
+//   uploadDir: path.join(__dirname, 'public/img'), // 上传文件目录
+//   keepExtensions: true// 保留后缀
+// }))
 // 路由
 app.get('/', function (req, res) {
   Article.find({}, (err, articles) => {
@@ -57,6 +64,41 @@ app.post('/articles/add', function (req, res) {
       console.log(err)
     } else {
       res.redirect('/')
+    }
+  })
+})
+app.post('/signup', function (req, res) {
+  console.log(req.body, '000000000000000000000000000000000000000000000000000')
+  // const { name } = req.body
+  const { name, password, avatar, gender, bio } = req.body
+  const user = new User()
+  user.name = name
+  user.password = password
+  user.avatar = avatar
+  user.gender = gender
+  user.bio = bio
+  user.save(err => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send({ code: 200 })
+    }
+  })
+})
+app.get('/login', function (req, res, next) {
+  res.render('login')
+})
+app.post('/login', function (req, res, next) {
+  User.findOne({ name: req.body.name }, (err, userinfo) => {
+    if (err) {
+      console.log(err)
+    } else {
+      if (userinfo && userinfo.name === req.body.name && userinfo.password === req.body.password) {
+        console.log(userinfo)
+        res.redirect('/')
+      } else {
+        res.send({ code: 0 })
+      }
     }
   })
 })
