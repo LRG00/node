@@ -61,7 +61,7 @@ app.post('/articles/add', function (req, res) {
   })
 })
 // 启动服务
-app.listen(3100, function () {
+app.listen(3200, function () {
   // console.log(process.env.NODE_ENV)
   console.log('Server started on port 3000...')
 })
